@@ -32,10 +32,12 @@ def delete_in_register(path, virus_name, virus_in_registry):
     a_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\\Microsoft\\Windows\\CurrentVersion\Run\\", 0,
                            winreg.KEY_ALL_ACCESS)
     try:
-        for index in range(10000):
+        index = 0
+        while True:
             nm = winreg.EnumValue(a_key, index)
             if path + virus_name in nm[1] or nm[0] in virus_in_registry:
                 winreg.DeleteValue(a_key, nm[0])
+            index += 1
     except WindowsError:
         pass
     winreg.CloseKey(a_key)
