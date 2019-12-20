@@ -22,8 +22,6 @@ def delete_directory(path, virus_name):
         rmtree(path + virus_name)
     except FileNotFoundError:
         pass
-    except PermissionError:
-        print('Запустите меня с правами администратора!')
 
     for i in os.listdir(path):
         if i.isdigit() or i == virus_name:
