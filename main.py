@@ -11,10 +11,14 @@ VIRUS_IN_REGISTRY = ['Microsoft Windows Driver']
 
 
 def kill_process(virus_in_task_manager):
+    viruses = []
     for i in subprocess.getoutput("wmic process get description").split('\n\n'):
         new = i.replace(' ', '')
-        if new.startswith('sys') and len(new) == 11 or new in virus_in_task_manager:
+        if new.startswith('sys') and len(new) == 11 or new in virus_in_task_manager or new.replace('.exe', '').isdigit():
             os.system(f'taskkill /f /im {new}')
+            viruses.append(new)
+    return viruses
+        
 
 
 def delete_directory(path, virus_name):
@@ -43,7 +47,7 @@ def delete_in_register(path, virus_name, virus_in_registry):
     winreg.CloseKey(a_key)
 
 
-def delete_in_users():
+def delete_in_users(viruses):
     list_dir_name = 'C:\\Users\\' if os.path.isdir('C:\\Users\\') else 'C:\\Documents and Settings\\'
     list_dir = os.listdir(list_dir_name)
     for i in list_dir:
@@ -55,14 +59,14 @@ def delete_in_users():
             continue
         for j in list_dir_user:
             if j.isdigit():
-                os.rename(list_dir_name + i + '\\' + j, str(uuid4()))
+                if any(viruses) in os.listdir(list_dir_name + i + '\\' + j):
+                    os.rename(list_dir_name + i + '\\' + j, str(uuid4()))
 
 
 def main():
     try:
-        kill_process(VIRUS_IN_TASK_MANAGER)
         delete_in_register(PATH, VIRUS_NAME, VIRUS_IN_REGISTRY)
-        delete_in_users()
+        delete_in_users(kill_process(VIRUS_IN_TASK_MANAGER))
         delete_directory(PATH, VIRUS_NAME)
     except PermissionError:
         print('Запустите программу от имени Администратора')
