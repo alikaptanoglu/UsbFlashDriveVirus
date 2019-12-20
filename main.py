@@ -68,11 +68,11 @@ def main():
         delete_in_register(PATH, VIRUS_NAME, VIRUS_IN_REGISTRY)
         delete_in_users(kill_process(VIRUS_IN_TASK_MANAGER))
         delete_directory(PATH, VIRUS_NAME)
+        print('Вирусы удалены!')
     except PermissionError:
         print('Запустите программу от имени Администратора')
 
-    input('Вирусы удалены.\n'
-          'Нажмите "Enter".')
+    input('\nНажмите "Enter", что бы выйти.')
 
 
 print('Разработчики:\n'
