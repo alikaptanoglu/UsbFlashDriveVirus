@@ -78,7 +78,7 @@ def main():
 print('Разработчики:\n'
       'Миненков - vk.com/rym9n\n'
       'Гаврилов - vk.com/gavr17\n\n'
-      'Version: 0.1.8\n')
+      'Version: 0.1.10\n')
 
 
 if __name__ == '__main__':
