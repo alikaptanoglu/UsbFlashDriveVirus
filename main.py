@@ -59,11 +59,8 @@ def delete_on_users():
             continue
 
         for j in list_dir_user:
-            try:
-                int(j)
+            if j.isdigit():
                 os.rename(list_dir_name + i + '\\' + j, str(uuid4()))
-            except ValueError:
-                continue
 
 
 print('Разработчики:\n'
