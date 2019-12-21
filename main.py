@@ -59,7 +59,7 @@ def delete_in_users(viruses):
             continue
         for j in list_dir_user:
             if j.isdigit():
-                if any(viruses) in os.listdir(list_dir_name + i + '\\' + j):
+                if os.listdir(list_dir_name + i + '\\' + j)[0] in viruses:
                     os.rename(list_dir_name + i + '\\' + j, str(uuid4()))
 
 
